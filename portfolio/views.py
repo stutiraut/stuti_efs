@@ -4,7 +4,7 @@ from .models import *
 from .forms import *
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
-
+from django.db.models import Sum
 
 
 now = timezone.now()
@@ -134,3 +134,18 @@ def investment_delete(request, pk):
    investment = get_object_or_404(Investment, pk=pk)
    investment.delete()
    return redirect('portfolio:investment_list')
+
+
+@login_required
+def summary(request, pk):
+    customer = get_object_or_404(Customer, pk=pk)
+    customers = Customer.objects.filter(created_date__lte=timezone.now())
+    stocks = Stock.objects.filter(customer=pk)
+    investments = Investment.objects.filter(customer=pk)
+    sum_purchase_price = Stock.objects.filter(customer=pk).aggregate(Sum('purchase_price'))
+    sum_recent_value = Investment.objects.filter(customer=pk).aggregate(Sum('recent_value'))
+    return render(request, 'portfolio/summary.html', {'customers': customers,
+                                                    'stocks': stocks,
+                                                    'investments': investments,
+                                                    'sum_purchase_price': sum_purchase_price,
+                                                    'sum_recent_value': sum_recent_value,})

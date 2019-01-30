@@ -61,8 +61,8 @@
                            class="btn btn-danger">Delete</a>
                     </td>
 
-                    <td><a href=""
-                           class="btn btn-primary">Portfolio</a>
+                    <td><a href="{% url 'portfolio:summary' pk=customer.pk %}"
+                           class="btn btn-primary">Summary</a>
 
                 </tr>
             {% endfor %}
