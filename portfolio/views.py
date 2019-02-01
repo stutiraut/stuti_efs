@@ -187,10 +187,14 @@ def summary(request, pk):
     customers = Customer.objects.filter(created_date__lte=timezone.now())
     stocks = Stock.objects.filter(customer=pk)
     investments = Investment.objects.filter(customer=pk)
+    bonds = Bond.objects.filter(customer=pk)
     sum_purchase_price = Stock.objects.filter(customer=pk).aggregate(Sum('purchase_price'))
     sum_recent_value = Investment.objects.filter(customer=pk).aggregate(Sum('recent_value'))
+    sum_purchase_price = Bond.objects.filter(customer=pk).aggregate(Sum('purchase_price'))
     return render(request, 'portfolio/summary.html', {'customers': customers,
                                                     'stocks': stocks,
                                                     'investments': investments,
+                                                    'bonds': bonds,
                                                     'sum_purchase_price': sum_purchase_price,
-                                                    'sum_recent_value': sum_recent_value,})
+                                                    'sum_recent_value': sum_recent_value,
+                                                    'sum_purchase_price': sum_purchase_price,})
