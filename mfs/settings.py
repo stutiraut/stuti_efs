@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -152,7 +153,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'stutirautstudent@gmail.com'
+EMAIL_HOST_USER = 'stutidummy12345'
 EMAIL_HOST_PASSWORD = 'celebrity533801'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -162,7 +163,7 @@ try:
 except ImportError:
     pass
 
-LOGIN_REDIRECT_URL = '/home'
-LOGOUT_REDIRECT_URL = '/home'
-
+LOGIN_REDIRECT_URL	=	'dashboard'
+LOGIN_URL	=	'login'
+LOGOUT_URL	=	'logout'
 

@@ -135,6 +135,51 @@ def investment_delete(request, pk):
    investment.delete()
    return redirect('portfolio:investment_list')
 
+@login_required
+def bond_list(request):
+   bonds = Bond.objects.filter(purchase_date__lte=timezone.now())
+   return render(request, 'portfolio/bond_list.html', {'bonds': bonds})
+
+@login_required
+def bond_new(request):
+   if request.method == "POST":
+       form = BondForm(request.POST)
+       if form.is_valid():
+           bond = form.save(commit=False)
+           bond.created_date = timezone.now()
+           bond.save()
+           bonds = Bond.objects.filter(purchase_date__lte=timezone.now())
+           return render(request, 'portfolio/bond_list.html',
+                         {'bonds': bonds})
+   else:
+       form = BondForm()
+       # print("Else")
+   return render(request, 'portfolio/bond_new.html', {'form': form})
+
+@login_required
+def bond_edit(request, pk):
+   bond = get_object_or_404(Bond, pk=pk)
+   if request.method == "POST":
+       form = BondForm(request.POST, instance=bond)
+       if form.is_valid():
+           bond = form.save()
+           # stock.customer = stock.id
+           bond.updated_date = timezone.now()
+           bond.save()
+           bonds = Bond.objects.filter(purchase_date__lte=timezone.now())
+           return render(request, 'portfolio/bond_list.html', {'bonds': bonds})
+   else:
+       # print("else")
+       form = BondForm(instance=bond)
+   return render(request, 'portfolio/bond_edit.html', {'form': form})
+
+@login_required
+def bond_delete(request, pk):
+    bond = get_object_or_404(Bond, pk=pk)
+    bond.delete()
+    return redirect('portfolio:bond_list')
+
+
 
 @login_required
 def summary(request, pk):

@@ -17,5 +17,9 @@ urlpatterns = [
     path('investment/create/', views.investment_new, name='investment_new'),
     path('investment/<int:pk>/edit/', views.investment_edit, name='investment_edit'),
     path('investment/<int:pk>/delete/', views.investment_delete, name='investment_delete'),
+    path('bond_list', views.bond_list, name='bond_list'),
+    path('bond/create/', views.bond_new, name='bond_new'),
+    path('bond/<int:pk>/edit/', views.bond_edit, name='bond_edit'),
+    path('bond/<int:pk>/delete/', views.bond_delete, name='bond_delete'),
     path('customer/<int:pk>/summary/', views.summary, name='summary'),
 ]
